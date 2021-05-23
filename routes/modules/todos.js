@@ -3,6 +3,8 @@ const router = express.Router()
 
 const Todo = require('../../models/todo')
 
+
+//新增
 router.get('/new', (req, res) => {
   return res.render('new')
 })
@@ -14,7 +16,7 @@ router.post('/', (req, res) => {
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })
-
+//進入編輯
 router.get('/:id', (req, res) => {
   const id = req.params.id
   return Todo.findById(id)
@@ -22,7 +24,7 @@ router.get('/:id', (req, res) => {
     .then(todo => res.render('detail', { todo }))
     .catch(error => console.log(error))
 })
-
+//修改
 router.get('/:id/edit', (req, res) => {
   const id = req.params.id
   return Todo.findById(id)
