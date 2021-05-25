@@ -15,6 +15,12 @@ router.get('/register', (req, res) => {
   res.render('register')
 })
 
+router.get('/logout', (req, res) => {
+  req.logout()
+  //Passport.js 提供的函式，會幫你清除 session
+  res.redirect('/users/login')
+})
+
 router.post('/register', (req, res) => {
   const { name, email, password, confirmPassword } = req.body
   User.findOne({ email }).then(user => {
