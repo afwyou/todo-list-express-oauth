@@ -9,6 +9,13 @@ const todoSchema = new Schema({
   isDone: {
     type: Boolean,
     default: false
+  },
+  userId: {
+    //去參照 User 的 ObjectId
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    index: true,
+    required: true
   }
 })
 
