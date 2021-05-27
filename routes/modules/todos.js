@@ -29,7 +29,7 @@ router.get('/:id', (req, res) => {
 router.get('/:id/edit', (req, res) => {
   const userId = req.user._id
   const _id = req.params.id
-  return Todo.findOne({ _id, userId })
+  return Todo.findOne({ _id, userId })//確保資料庫的物件屬性：_id與req.params.id一樣;再確保這筆資料和資料庫的物件屬性:userId與req.user._id相同
     .lean()
     .then(todo => res.render('edit', { todo }))
     .catch(error => console.log(error))
