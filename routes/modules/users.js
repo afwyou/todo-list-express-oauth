@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const User = require('../../models/user')
 const passport = require('passport')
+const bcrypt = require('bcryptjs')
 router.get('/login', (req, res) => {
   console.log('第三我在/login(重新導向後）印出res.locals：', res.locals)
   res.render('login')
@@ -55,11 +56,15 @@ router.post('/register', (req, res) => {
       })
     }//return 之後，會跳脫function，不需要再else了
 
-    return User.create({
-      name,
-      email,
-      password
-    })
+    return bcrypt
+      .genSalt(10)// 產生「鹽」，並設定複雜度係數為 10//不同帳號會有不同的salt
+      .then(salt => bcrypt.hash(password, salt))// 為使用者密碼「加鹽」，產生雜湊
+
+      .then(hash => User.create({
+        name,
+        email,
+        password: hash // 用雜湊值取代原本的使用者密碼
+      }))
       .then(() => res.redirect('/'))
       .catch((error) => console.log('error'))
 
