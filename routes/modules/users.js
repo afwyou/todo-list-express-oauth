@@ -57,7 +57,13 @@ router.post('/register', (req, res) => {
     }//return 之後，會跳脫function，不需要再else了
 
     return bcrypt
-      .genSalt(10)// 產生「鹽」，並設定複雜度係數為 10//不同帳號會有不同的salt
+      .genSalt(10)
+      // 產生「鹽」，並設定複雜度係數為 10
+      //不同帳號會有不同的salt，雜湊位數也不同，因此駭客更難透過窮算法去取得使用者的密碼
+      //主要是密碼本身產生的主雜湊文是固定的
+      //添加salt的合體密碼雜湊，和salt本身，會被分別存放在資料庫不同的地方
+      //最後比對的仍然是密碼本身產生的雜湊值
+      //只不過資料庫password呈現的是salt+密碼的雜湊值
       .then(salt => bcrypt.hash(password, salt))// 為使用者密碼「加鹽」，產生雜湊
 
       .then(hash => User.create({
