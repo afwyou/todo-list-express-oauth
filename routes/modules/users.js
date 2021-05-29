@@ -4,7 +4,7 @@ const User = require('../../models/user')
 const passport = require('passport')
 const bcrypt = require('bcryptjs')
 router.get('/login', (req, res) => {
-  console.log('第三我在/login(重新導向後）印出res.locals：', res.locals)
+  // console.log('第三我在/login(重新導向後）印出res.locals：', res.locals)
   res.render('login')
 })
 
@@ -21,7 +21,7 @@ router.get('/logout', (req, res) => {
   req.logout()
   //Passport.js 提供函式，會清除 session
   req.flash('success_msg', '你已經成功登出。')
-  console.log('第二我在/logout印出：res.locals', res.locals)
+  // console.log('第二我在/logout印出：res.locals', res.locals)
   res.redirect('/users/login')
 })
 
